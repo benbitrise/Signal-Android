@@ -17,6 +17,7 @@ plugins {
   id("com.squareup.wire")
   id("translations")
   id("licenses")
+  id("com.spotify.ruler")
 }
 
 apply(from = "static-ips.gradle.kts")
@@ -717,4 +718,11 @@ fun Project.languageList(): List<String> {
 
 fun String.capitalize(): String {
   return this.replaceFirstChar { it.uppercase() }
+}
+
+ruler {
+  abi.set("arm64-v8a")
+  locale.set("en")
+  screenDensity.set(480)
+  sdkVersion.set(30)
 }

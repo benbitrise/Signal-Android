@@ -11,6 +11,9 @@ buildscript {
         includeGroupByRegex("org\\.jlleitschuh\\.gradle.*")
       }
     }
+    dependencies {
+      classpath("com.spotify.ruler:ruler-gradle-plugin:2.0.0-alpha-3")
+    }
   }
 
   dependencies {
