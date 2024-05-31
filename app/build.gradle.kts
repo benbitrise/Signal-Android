@@ -17,6 +17,13 @@ plugins {
   id("com.squareup.wire")
   id("translations")
   id("licenses")
+  id("com.jraska.module.graph.assertion") version "2.5.0"
+}
+
+moduleGraphAssert {
+  maxHeight = System.getenv("MAX_GRADLE_DEPTH").toInt()
+  configurations = setOf("api", "implementation") // Dependency configurations to look. ['api', 'implementation'] is the default
+  assertOnAnyBuild = false // true value will run the assertions as part of any build without need to run the assert* tasks, false is default
 }
 
 apply(from = "static-ips.gradle.kts")

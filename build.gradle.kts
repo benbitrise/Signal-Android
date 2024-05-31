@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.ivancarras.graphfity.plugin.main.GraphfityPluginExtension
 
 buildscript {
   rootProject.extra["kotlin_version"] = "1.8.10"
@@ -9,6 +10,7 @@ buildscript {
       url = uri("https://plugins.gradle.org/m2/")
       content {
         includeGroupByRegex("org\\.jlleitschuh\\.gradle.*")
+        includeGroupByRegex("com\\.github\\.ivancarras.*")
       }
     }
   }
@@ -30,8 +32,11 @@ buildscript {
     classpath("androidx.benchmark:benchmark-gradle-plugin:1.1.0-beta04")
     classpath(files("$rootDir/wire-handler/wire-handler-1.0.0.jar"))
     classpath("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:1.8.10-1.0.9")
+    classpath("com.github.ivancarras:graphfity-plugin:1.1.0")
   }
 }
+
+apply(plugin = "com.github.ivancarras.graphfity")
 
 tasks.withType<Wrapper> {
   distributionType = Wrapper.DistributionType.ALL
@@ -100,4 +105,9 @@ tasks.register("format") {
     gradle.includedBuild("build-logic").task(":tools:ktlintFormat"),
     *subprojects.mapNotNull { tasks.findByPath(":${it.name}:ktlintFormat") }.toTypedArray()
   )
+}
+
+configure<GraphfityPluginExtension> {
+  nodeTypesPath.set("graphfity/nodeTypes.json")
+  projectRootName.set("Signal-Android")
 }
