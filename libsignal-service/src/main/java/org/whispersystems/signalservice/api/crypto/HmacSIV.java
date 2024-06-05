@@ -30,7 +30,14 @@ public final class HmacSIV {
     if (K.length != 32) throw new AssertionError("K was wrong length");
     if (M.length != 32) throw new AssertionError("M was wrong length");
 
-    byte[] Ka = hmacSha256(K, AUTH_BYTES);
+    // I have no clue about crypto, but YOLO. I'll make a change
+
+    byte[] mySalt = StringUtil.utf8("NaCl");
+    byte[] newAuth = new byte[K.length + mySalt.length];
+    System.arraycopy(K, 0, newAuth, 0, K.length);
+    System.arraycopy(mySalt, 0, newAuth, K.length, mySalt.length);
+
+    byte[] Ka = hmacSha256(newAuth, AUTH_BYTES);
     byte[] Ke = hmacSha256(K, ENC_BYTES);
     byte[] IV = copyOfRange(hmacSha256(Ka, M), 0, 16);
     byte[] Kx = hmacSha256(Ke, IV);
