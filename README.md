@@ -1,4 +1,4 @@
- Signal Android
+ ignal Android
 
 Signal is a simple, powerful, and secure messenger.
 
